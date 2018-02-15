@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE ui:composition PUBLIC "-//W3C//DTD Xui:composition 1.0 Transitional//EN" "http://www.w3.org/TR/xui:composition1/DTD/xui:composition1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xui:composition"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form styleClass="custom">
+		<p:growl id="messages" />
+		<p:menubar>
+
+			<p:menuitem value="Menu Principal" outcome="/pages/principal.xhtml"
+				style="font-weight:bold; margin-left: 45px;" />
+				
+			<p:separator />
+			<p:menuitem value="Colaboradores" outcome="/pages/colaborador.xhtml" />
+
+			<p:separator />
+			<p:menuitem value="Fabricantes" outcome="/pages/fabricante.xhtml" />
+			<p:separator />
+
+			<p:menuitem value="Produtos" outcome="/pages/produto.xhtml" />
+			<p:separator />
+			
+			<p:menuitem value="Sobre" outcome="/pages/sobre.xhtml" />
+			<p:separator />
+			
+			<p:menuitem value="Sair" outcome="/pages/login.xhtml" />
+						
+		</p:menubar>
+	</h:form>
+</ui:composition>

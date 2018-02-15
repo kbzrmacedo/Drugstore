@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h1>Colaboradores</h1>
+		<f:event listener="#{MBColaborador.carregarListagem}"
+			type="preRenderView"></f:event>
+		<h:form id="frmColabListagem">
+			<p:dataTable id="tblColabListagem" widgetVar="tabelaColabListagem"
+				value="#{MBColaborador.itens}" var="item"
+				emptyMessage="Nenhum colaborador cadastrado" paginator="true"
+				rows="8" filteredValue="#{MBColaborador.itensFiltrados}">
+
+				<f:facet name="header">
+					<h:outputText value="Listagem" />
+				</f:facet>
+
+				<p:column headerText="Código" sortBy="#{item.id}"
+					filterBy="#{item.id}">
+					<h:outputText value="#{item.id}" />
+				</p:column>
+
+				<p:column headerText="Nome" sortBy="#{item.nome}"
+					filterBy="#{item.nome}">
+					<h:outputText value="#{item.nome}" />
+				</p:column>
+
+				<p:column headerText="Cargo" sortBy="#{item.cargo}">
+					<h:outputText value="#{item.cargo}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgColabExcluir').show();"
+						update=":frmColabExcluir:pnlColabExcluir">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBColaborador.colaborador}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{MBColaborador.prepararEditar}"
+						oncomplete="PF('dlgColabEditar').show();"
+						update=":msgGlobal :frmColabEditar:pnlColabEditar">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBColaborador.colaborador}" />
+					</p:commandButton>
+				</p:column>
+
+				<f:facet name="footer">
+					<p:commandButton value="Novo"
+						oncomplete="PF('dlgColabNovo').show();"
+						actionListener="#{MBColaborador.prepararNovo}"
+						update=":frmColabNovo:pnlColabNovo :msgGlobal" />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+		<!--============================= JANELA Novo =========================================== -->
+		<p:dialog widgetVar="dlgColabNovo" closable="false" draggable="false"
+			resizable="false" header="colaborador - Novo" modal="true"
+			appendTo="@(body)">
+			<h:form id="frmColabNovo">
+				<p:panelGrid id="pnlColabNovo" columns="2">
+					<p:outputLabel for="desc" value="Nome:" />
+					<p:inputText id="desc" size="30" maxlength="50"
+						value="#{MBColaborador.colaborador.nome}" required="true"
+						requiredMessage="Campo Nome Obrigatório!!" />
+
+					<p:outputLabel for="din" value="Cargo:" />
+					<p:inputText id="din" value="#{MBColaborador.colaborador.cargo}"
+						required="true" requiredMessage="Campo Cargo Obrigatório!!" />
+
+				</p:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Cadastrar"
+						actionListener="#{MBColaborador.novo}"
+						update=":frmColabListagem:tblColabListagem"
+						oncomplete="verificar(xhr, status, args, 'dlgColabNovo', 'tabelaColabListagem');" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgColabNovo').hide();">
+						<p:resetInput target="pnlColabNovo" />
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		<!--============================= JANELA Excluir =========================================== -->
+		<p:dialog widgetVar="dlgColabExcluir" closable="false"
+			draggable="false" resizable="false" header="Colaborador - Excluir"
+			modal="true" appendTo="@(body)">
+			<h:form id="frmColabExcluir">
+				<p:panelGrid id="pnlColabExcluir" columns="2">
+					<p:outputLabel value="Código:" />
+					<h:outputText value="#{MBColaborador.colaborador.id}" />
+
+					<p:outputLabel value="Nome:" />
+					<h:outputText value="#{MBColaborador.colaborador.nome}" />
+
+					<p:outputLabel value="Cargo:" />
+					<h:outputText value="#{MBColaborador.colaborador.cargo}" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBColaborador.excluir}"
+						update=":frmColabListagem:tblColabListagem :msgGlobal "
+						oncomplete="PF('dlgColabExcluir').hide();" />
+
+					<p:commandButton value="Cancelar" process="@this"
+						oncomplete="PF('dlgColabExcluir').hide();" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+		<!--============================= JANELA Editar =========================================== -->
+		<p:dialog widgetVar="dlgColabEditar" closable="false"
+			draggable="false" resizable="false" header="Colaborador - Editar"
+			modal="true" appendTo="@(body)">
+
+			<h:form id="frmColabEditar">
+				<p:panelGrid id="pnlColabEditar" columns="2">
+
+					<p:outputLabel value="Código:" />
+					<h:outputText value="#{MBColaborador.colaborador.id}" />
+
+					<p:outputLabel for="desc" value="Nome:" />
+					<p:inputText id="desc" size="30" maxlength="50"
+						value="#{MBColaborador.colaborador.nome}" required="true"
+						requiredMessage="Campo Nome Obrigatório!!" />
+
+					<p:outputLabel for="din" value="Cargo:" />
+					<p:inputText id="din" size="30" maxlength="50"
+						value="#{MBColaborador.colaborador.cargo}" required="true"
+						requiredMessage="Campo Cargo Obrigatório!!" />
+				</p:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBColaborador.editar}"
+						update=":msgGlobal :frmColabListagem:tblColabListagem"
+						oncomplete="verificar(xhr, status, args, 'dlgColabEditar', 'tabelaColabListagem');" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgColabEditar').hide();">
+						<p:resetInput target="pnlColabEditar" />
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

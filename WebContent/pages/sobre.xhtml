@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE ui:composition PUBLIC "-//W3C//DTD Xui:composition 1.0 Transitional//EN" "http://www.w3.org/TR/xui:composition1/DTD/xui:composition1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xui:composition"
+	xmlns:h="http://java.sun.com/jsf/ui:composition"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h1>Sistema Droga+</h1>
+		<p align="justify">A Droga+ é uma rede de farmácias brasileira
+			online controlada pela equipe JAVALISTAS, segunda maior rede online
+			de farmácias do Brasil estando atrás apenas da DOGARIA. Fundada em
+			2018, a Drogaria São Paulo foi a primeira farmácia a implantar o
+			atendimento 24 horas online e a dar concessão de descontos para
+			aposentados.</p>
+		<div align="center" style="margin-top: 50px;">
+			<h:graphicImage library="images" name="droga.png" width="550"
+				height="150" />
+		</div>
+		<center>
+			<h:graphicImage library="images" name="droga.png" width="50"
+				height="50" style="padding-left: 10px;padding-top: 10px;  " />
+		</center>
+
+	</ui:define>
+</ui:composition>

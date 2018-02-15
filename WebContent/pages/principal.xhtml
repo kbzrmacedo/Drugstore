@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE ui:composition PUBLIC "-//W3C//DTD Xui:composition 1.0 Transitional//EN" "http://www.w3.org/TR/xui:composition1/DTD/xui:composition1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xui:composition"
+	xmlns:h="http://java.sun.com/jsf/ui:composition"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="conteudo">	
+	<script src="http://maps.google.com/maps/api/js?key=AIzaSyBt2gAA9fQttQIx1YVpTMbuY_QeYkutt6I" type="text/javascript"></script>
+	
+		<h1 align="center">Olá, Admin!</h1>
+		<h3 align="center">Seja bem vindo. Acesse o menu lateral para ser redirecionado para a relação desejada. Abaixo segue uma grafico da relação Fabricantes x Remédios:</h3>
+		<center>
+		<br />
+		<br />
+		<h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
+			<p:chart  type="bar" model="#{MBGrafico.animatedModel2}"
+				style="width:330px;" value="Fornecedores X Produtos" />
+		</h:panelGrid>
+		</center>
+		<br />
+		<br />
+		<h1>Localização</h1>
+		<p:gmap center="-23.568062,-46.647691099999975" zoom="13" type="HYBRID" style="width:100%;height:400px" model="#{MBMapa.simpleModel}" />
+			
+	</ui:define>
+</ui:composition>
